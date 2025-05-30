@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="TodoApp.Views.AddEditTodoPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TodoApp.ViewModels"
+             x:DataType="viewmodels:AddEditTodoViewModel"
+             Title="{Binding PageTitle}">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+
+            <StackLayout>
+                <Label Text="Title *"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                <Entry Text="{Binding Title}"
+                       Placeholder="What needs to be done?" />
+            </StackLayout>
+
+            <StackLayout>
+                <Label Text="Description"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                <Editor Text="{Binding Description}"
+                        Placeholder="Add details..."
+                        AutoSize="TextChanges"
+                        HeightRequest="100" />
+            </StackLayout>
+
+            <StackLayout>
+                <Label Text="Due Date"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                <DatePicker Date="{Binding DueDate}" />
+                <Button Text="Clear Due Date"
+                        Command="{Binding ClearDueDateCommand}"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        FontSize="Small" />
+            </StackLayout>
+
+            <StackLayout>
+                <Label Text="Priority"
+           FontAttributes="Bold"
+           TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                <Picker SelectedItem="{Binding Priority}"
+            SelectedIndex="{Binding Priority, Converter={StaticResource PriorityToIndexConverter}}">
+                    <Picker.Items>
+                        <x:String>High</x:String>
+                        <x:String>Medium</x:String>
+                        <x:String>Low</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Completed?"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray100}}" />
+                <CheckBox IsChecked="{Binding IsCompleted}"
+                          Color="{StaticResource Primary}"
+                          VerticalOptions="Center" />
+            </StackLayout>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Button Grid.Column="0"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource SecondaryButtonStyle}" />
+                <Button Grid.Column="1"
+                        Text="Save"
+                        Command="{Binding SaveTodoCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Margin="10,0,0,0" />
+            </Grid>
+
+            <ActivityIndicator IsVisible="{Binding IsLoading}"
+                               IsRunning="{Binding IsLoading}"
+                               Color="{StaticResource Primary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

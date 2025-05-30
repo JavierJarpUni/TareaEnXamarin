@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp", "TareaEnXamarin\TodoApp.csproj", "{C390E436-E92F-4A29-BF7A-D0B25D678B68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C390E436-E92F-4A29-BF7A-D0B25D678B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C390E436-E92F-4A29-BF7A-D0B25D678B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C390E436-E92F-4A29-BF7A-D0B25D678B68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C390E436-E92F-4A29-BF7A-D0B25D678B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C390E436-E92F-4A29-BF7A-D0B25D678B68}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CCA9CA2-356F-48F9-A6BA-5477157EDFDC}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TodoApp"
+    xmlns:converters="clr-namespace:TodoApp.Converters"
+    x:Class="TodoApp.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToFontAttributesConverter x:Key="BoolToFontAttributesConverter" />
+            <converters:BoolToTextDecorationConverter x:Key="BoolToTextDecorationConverter" />
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+            <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+            <converters:PriorityToTextConverter x:Key="PriorityToTextConverter" />
+            <converters:PriorityToColorConverter x:Key="PriorityToColorConverter" />
+            <converters:PriorityToBgColorConverter x:Key="PriorityToBgColorConverter" />
+            <converters:PriorityToVisibilityConverter x:Key="PriorityToVisibilityConverter" />
+            <converters:PriorityToIndexConverter x:Key="PriorityToIndexConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

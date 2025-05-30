@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="TodoApp.Views.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TodoApp.ViewModels"
+             xmlns:models="clr-namespace:TodoApp.Models"
+             x:DataType="viewmodels:MainPageViewModel"
+             Title="My Todos">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0" Padding="15" Spacing="10">
+            <Entry Placeholder="What's your next task?"
+                   Text="{Binding NewTodoTitle}" />
+            <Button Text="Add Task"
+                    Command="{Binding AddNewTodoCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    HorizontalOptions="End" />
+        </StackLayout>
+
+        <RefreshView Grid.Row="1"
+                     Command="{Binding LoadTodosCommand}"
+                     IsRefreshing="{Binding IsLoading}">
+
+            <CollectionView ItemsSource="{Binding Todos}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}">
+
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="20" VerticalOptions="Center">
+                        <Label Text="No todos yet!"
+                               FontSize="18"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}" />
+                        <Label Text="Start adding your tasks above!"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                               Margin="0,5,0,0" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TodoItem">
+                        <Border Margin="10,5"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray800}}"
+                                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                                StrokeThickness="1">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+
+                            <Grid Padding="15" ColumnDefinitions="Auto,*,Auto,Auto">
+
+                                <CheckBox Grid.Column="0"
+                                          IsChecked="{Binding IsCompleted}"
+                                          Color="{StaticResource Primary}"
+                                          VerticalOptions="Center"
+                                          CheckedChanged="CheckBox_CheckedChanged" />
+
+                                <StackLayout Grid.Column="1"
+                                             Margin="10,0,0,0"
+                                             VerticalOptions="Center">
+
+                                    <Label Text="{Binding Title}"
+                                           FontSize="16"
+                                           FontAttributes="{Binding IsCompleted, Converter={StaticResource BoolToFontAttributesConverter}}"
+                                           TextDecorations="{Binding IsCompleted, Converter={StaticResource BoolToTextDecorationConverter}}"
+                                           TextColor="{Binding IsCompleted, Converter={StaticResource BoolToColorConverter}}" />
+
+                                    <Label Text="{Binding Description}"
+                                           FontSize="12"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"
+                                           IsVisible="{Binding Description, Converter={StaticResource StringToBoolConverter}}"
+                                           MaxLines="1"
+                                           LineBreakMode="TailTruncation" />
+
+                                    <StackLayout Orientation="Horizontal" Spacing="10">
+                                        <Label Text="{Binding DueDate, StringFormat='Due: {0:MMM dd}'}"
+                                               FontSize="10"
+                                               TextColor="{StaticResource Warning}"
+                                               IsVisible="{Binding DueDate, Converter={StaticResource IsNotNullConverter}}" />
+
+                                        <Label Text="{Binding Priority, Converter={StaticResource PriorityToTextConverter}}"
+                                               FontSize="10"
+                                               TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}"
+                                               BackgroundColor="{Binding Priority, Converter={StaticResource PriorityToBgColorConverter}}"
+                                               Padding="4,2"
+                                               IsVisible="{Binding Priority, Converter={StaticResource PriorityToVisibilityConverter}}">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Priority}" Value="1">
+                                                    <Setter Property="Text" Value="HIGH" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Priority}" Value="3">
+                                                    <Setter Property="Text" Value="LOW" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <Button Grid.Column="2"
+                                        Text="Edit"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}, Path=EditTodoCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="{StaticResource Primary}"
+                                        TextColor="White"
+                                        FontSize="12"
+                                        Padding="8,4"
+                                        CornerRadius="6"
+                                        Margin="5,0" />
+
+                                <Button Grid.Column="3"
+                                        Text="×"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainPageViewModel}}, Path=DeleteTodoCommand}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="{StaticResource Danger}"
+                                        TextColor="White"
+                                        FontSize="16"
+                                        WidthRequest="32"
+                                        HeightRequest="32"
+                                        CornerRadius="16"
+                                        Padding="0" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator Grid.RowSpan="2"
+                         IsVisible="{Binding IsLoading}"
+                         IsRunning="{Binding IsLoading}"
+                         Color="{StaticResource Primary}"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         BackgroundColor="{AppThemeBinding Light=#80FFFFFF, Dark=#80000000}" />
+    </Grid>
+</ContentPage>
